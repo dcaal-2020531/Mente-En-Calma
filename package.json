@@ -1,0 +1,24 @@
+{
+  "name": "mente-en-calma",
+  "version": "1.0.0",
+  "description": "App web para hacer citas y reuniones virtuales con psicologos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+   "dev": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcaal-2020531/Mente-En-Calma.git"
+  },
+  "author": "The boys",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcaal-2020531/Mente-En-Calma/issues"
+  },
+  "homepage": "https://github.com/dcaal-2020531/Mente-En-Calma#readme",
+  "dependencies": {
+    "mongoose": "^8.15.1"
+  },
+  "type": "module"
+}
