@@ -5,6 +5,7 @@ import express from 'express' //SERVIDOR HTTP
 import morgan from 'morgan' //LOGS
 import helmet from 'helmet' //SEGURIDAD HTTP
 import cors from 'cors' //ACCESO AL API
+import psychologistRoutes from '../src/psychologist/psychologist.routes.js'
 
 
 const configs = (app)=>{
@@ -15,7 +16,7 @@ const configs = (app)=>{
     app.use(morgan('dev'))    
 }
 const routes = (app)=>{
-   // app.use('/v1/login', empleadoRoutes)
+   app.use('/v1/psychologist', psychologistRoutes)
 }
 
 
