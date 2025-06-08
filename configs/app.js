@@ -3,6 +3,8 @@ import express from 'express' //SERVIDOR HTTP
 import morgan from 'morgan' //LOGS
 import helmet from 'helmet' //SEGURIDAD HTTP
 import cors from 'cors' //ACCESO AL API
+import adminRoutes from '../src/admin/admin.routes.js'
+import authRoutes from '../src/auth/auth.routes.js'
 
 
 const configs = (app)=>{
@@ -13,7 +15,8 @@ const configs = (app)=>{
     app.use(morgan('dev'))    
 }
 const routes = (app)=>{
-
+    app.use('/v1/auth', authRoutes)
+    app.use('/v1/admin', adminRoutes)
 }
 
 
