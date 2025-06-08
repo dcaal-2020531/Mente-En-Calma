@@ -5,7 +5,7 @@ import {
     updateAdmin, 
     updateAdminPassword,
     deleteAdmin 
-} from '../controllers/admin.controller'
+} from './admin.controller.js'
 
 const api = Router()
 
