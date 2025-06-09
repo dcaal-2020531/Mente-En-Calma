@@ -9,9 +9,9 @@ const api = Router()
 //------------------------Rutas de Auth------------------------
 
 // Registrar un nuevo Admin
-api.post('/register', registerAdmin)
+api.post('/registerAdmin', registerAdmin)
 
 // Login de un Admin
-api.post('/login', loginAdmin)
+api.post('/loginAdmin', loginAdmin)
 
 export default api

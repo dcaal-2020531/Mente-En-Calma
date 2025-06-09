@@ -134,7 +134,7 @@ export const deleteAdmin = async (req, res) => {
         }
 
         // Eliminar el admin
-        await admin.remove()
+        await admin.deleteOne()
         res.status(200).json({ message: 'Admin deleted successfully' })
     } catch (err) {
         console.error(err)
