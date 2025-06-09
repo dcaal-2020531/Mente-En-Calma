@@ -7,6 +7,7 @@ import helmet from 'helmet' //SEGURIDAD HTTP
 import cors from 'cors' //ACCESO AL API
 import psychologistRoutes from '../src/psychologist/psychologist.routes.js'
 import userRoutes from '../src/user/user.routes.js'
+import appointmentRoutes from '../src/appointment/appointment.routes.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -24,7 +25,8 @@ const configs = (app)=>{
 }
 const routes = (app)=>{
    app.use('/v1/psychologist', psychologistRoutes)
-   app.use('/v1/user', userRoutes);
+   app.use('/v1/user', userRoutes)
+   app.use('/v1/appointment', appointmentRoutes)
 }
 
 
