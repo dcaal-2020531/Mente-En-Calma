@@ -7,6 +7,7 @@ import helmet from 'helmet' //SEGURIDAD HTTP
 import cors from 'cors' //ACCESO AL API
 import psychologistRoutes from '../src/psychologist/psychologist.routes.js'
 import authRoutes from '../src/auth/auth.routes.js'
+import programsRoutes from '../src/programs/programs.routes.js'
 
 
 const configs = (app)=>{
@@ -19,6 +20,7 @@ const configs = (app)=>{
 const routes = (app)=>{
    app.use('/v1/psychologist', psychologistRoutes)
    app.use('/v1/login', authRoutes)
+   app.use('/v1/programs', programsRoutes)
 }
 
 
