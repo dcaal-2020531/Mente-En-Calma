@@ -23,12 +23,14 @@ const adminSchema = new Schema(
             type: String,
             required: [true, 'Email is required'],
             unique: true,
-            lowercase: true
+            lowercase: true,
+            trim: true
         },
         password: {
             type: String,
             required: [true, 'Password is required'],
-            minLength: [8, 'Password must be at least 8 characters']
+            minLength: [8, 'Password must be at least 8 characters'],
+            trim: true
         },
         role: {
             type: String,
@@ -36,7 +38,8 @@ const adminSchema = new Schema(
         },
         phone: {
             type: String,
-            required: [true, 'Phone is required']
+            required: [true, 'Phone is required'],
+            trim: true
         },
         status: {
             type: Boolean,
