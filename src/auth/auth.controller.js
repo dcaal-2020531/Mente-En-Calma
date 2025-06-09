@@ -2,6 +2,45 @@ import Admin from '../admin/admin.model.js' // Modelo Admin
 import { encrypt, checkPassword } from '../../utils/encrypt.js' // Funciones de encriptación
 import { generateJwt } from '../../utils/jwt.js' // Función para generar JWT
 
+// Crear Admin por defecto
+export const createDefaultAdmin = async () => {
+    try {
+        const defaultEmail = 'admin@example.com'
+        const defaultUsername = 'admin'
+        const defaultPassword = 'Admin1234'
+
+        // Verificar si ya existe un admin con ese username o email
+        const existingAdmin = await Admin.findOne({
+            $or: [{ email: defaultEmail }, { username: defaultUsername }]
+        })
+
+        if (existingAdmin) {
+            console.log('Admin por defecto ya existe')
+            return
+        }
+
+        // Encriptar la contraseña por defecto
+        const hashedPassword = await encrypt(defaultPassword)
+
+        // Crear nuevo Admin por defecto
+        const newAdmin = new Admin({
+            name: 'Super',
+            surname: 'Admin',
+            username: defaultUsername,
+            email: defaultEmail,
+            password: hashedPassword,
+            phone: '00000000', // Número por defecto
+            role: 'admin',
+            status: true
+        })
+
+        await newAdmin.save()
+        console.log('Admin por defecto creado con éxito')
+    } catch (error) {
+        console.error('Error al crear el admin por defecto:', error)
+    }
+}
+
 // Registro de nuevo Admin
 export const registerAdmin = async (req, res) => {
     const { name, surname, username, email, password, phone } = req.body
