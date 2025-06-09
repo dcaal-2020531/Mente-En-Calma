@@ -1,6 +1,5 @@
 
 'use strict'
-rigin/feature/admin
 import express from 'express' //SERVIDOR HTTP
 import morgan from 'morgan' //LOGS
 import helmet from 'helmet' //SEGURIDAD HTTP
@@ -8,20 +7,31 @@ import cors from 'cors' //ACCESO AL API
 import psychologistRoutes from '../src/psychologist/psychologist.routes.js'
 import adminRoutes from '../src/admin/admin.routes.js'
 import authRoutes from '../src/auth/auth.routes.js'
+import userRoutes from '../src/user/user.routes.js'
+import appointmentRoutes from '../src/appointment/appointment.routes.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const configs = (app)=>{
     app.use(express.json())
     app.use(express.urlencoded({extended: false}))
     app.use(cors())
     app.use(helmet())
-    app.use(morgan('dev'))    
+    app.use(morgan('dev'))  
+    app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+  
 }
 const routes = (app)=>{
    app.use('/v1/psychologist', psychologistRoutes)
    app.use('/v1/login', authRoutes)
     app.use('/v1/auth', authRoutes)
     app.use('/v1/admin', adminRoutes)
+   app.use('/v1/user', userRoutes)
+   app.use('/v1/appointment', appointmentRoutes)
 }
 
 

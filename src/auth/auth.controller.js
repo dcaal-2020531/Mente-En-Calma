@@ -1,6 +1,7 @@
-    import Psychologist from '../psychologist/psychologist.model.js'
-    import { checkPassword, encrypt } from '../../utils/encrypt.js'
-    import { generateJwt } from '../../utils/jwt.js'
+import Psychologist from '../psychologist/psychologist.model.js'
+import { checkPassword, encrypt } from '../../utils/encrypt.js'
+import { generateJwt } from '../../utils/jwt.js'
+import Admin from '../admin/admin.model.js' // Modelo Admin
 
     export const test = (req, res)=>{
         console.log('test is running')
@@ -57,9 +58,6 @@
         }
     }
 
-import Admin from '../admin/admin.model.js' // Modelo Admin
-import { encrypt, checkPassword } from '../../utils/encrypt.js' // Funciones de encriptación
-import { generateJwt } from '../../utils/jwt.js' // Función para generar JWT
 
 // Registro de nuevo Admin
 export const registerAdmin = async (req, res) => {
