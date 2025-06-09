@@ -1,11 +1,12 @@
 
 'use strict'
-
+rigin/feature/admin
 import express from 'express' //SERVIDOR HTTP
 import morgan from 'morgan' //LOGS
 import helmet from 'helmet' //SEGURIDAD HTTP
 import cors from 'cors' //ACCESO AL API
 import psychologistRoutes from '../src/psychologist/psychologist.routes.js'
+import adminRoutes from '../src/admin/admin.routes.js'
 import authRoutes from '../src/auth/auth.routes.js'
 
 
@@ -19,6 +20,8 @@ const configs = (app)=>{
 const routes = (app)=>{
    app.use('/v1/psychologist', psychologistRoutes)
    app.use('/v1/login', authRoutes)
+    app.use('/v1/auth', authRoutes)
+    app.use('/v1/admin', adminRoutes)
 }
 
 
