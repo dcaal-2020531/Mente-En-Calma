@@ -44,6 +44,10 @@ const psychologistSchema = Schema(
         type: String,
        // default: ['General'],
         enum: ['Ansiedad', 'Depresión', 'TDAH', 'Trastornos alimenticios', 'Estrés postraumático', 'Duelo', 'Relaciones', 'Autoestima', 'Otro']
+        },
+        ProfilePicture:{
+            type: String,
+            default: ''
         }
 
     }
