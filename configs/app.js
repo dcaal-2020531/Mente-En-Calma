@@ -9,6 +9,7 @@ import adminRoutes from '../src/admin/admin.routes.js'
 import authRoutes from '../src/auth/auth.routes.js'
 import userRoutes from '../src/user/user.routes.js'
 import appointmentRoutes from '../src/appointment/appointment.routes.js'
+import programsRoutes from '../src/programs/programs.routes.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -32,6 +33,7 @@ const routes = (app)=>{
     app.use('/v1/admin', adminRoutes)
    app.use('/v1/user', userRoutes)
    app.use('/v1/appointment', appointmentRoutes)
+   app.use('/v1/programs', programsRoutes)
 }
 
 
