@@ -23,9 +23,9 @@ Descripcion del Proyecto : "Propuesta de proyecto sobre una app web la cual faci
 4. Abre en el navegador: `http://localhost:1234`
 
 #Integrantes del equipo
-Diego Alejandro Caal Hernandez
-Alexander David Borja Mena
-Juan Pablo Barrera Delgado
-Jose Daniel Aceituno Martinez
-Jose Javier Oroxon Ixchop
+Diego Alejandro Caal Hernandez, 
+Alexander David Borja Mena, 
+Juan Pablo Barrera Delgado, 
+Jose Daniel Aceituno Martinez, 
+Jose Javier Oroxon Ixchop.
 
