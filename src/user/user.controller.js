@@ -1,4 +1,5 @@
 import User from './user.model.js';
+import { validationResult } from 'express-validator';
 import fs from 'fs';
 
 export const getAllUsers = async (req, res) => {
@@ -16,41 +17,69 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
+        // Validar campos recibidos
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                message: 'Errores de validación',
+                errors: errors.array()
+            });
+        }
+
         const data = req.body;
         if (req.file) {
-            data.profileImage = req.file.filename;
+            data.profileImage = req.file.filename; // Guardar nombre de la imagen si se sube
         }
         const user = new User(data);
         await user.save();
+
         return res.send({
             success: true,
-            message: 'User created successfully',
+            message: 'Usuario creado exitosamente',
             user
         });
     } catch (err) {
         console.error(err);
-        return res.status(500).send({ success: false, message: 'Error creating user', err });
+        return res.status(500).send({
+            success: false,
+            message: 'Error al crear el usuario',
+            err
+        });
     }
 };
 
 export const updateUser = async (req, res) => {
     try {
+        // Validar campos recibidos
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                message: 'Errores de validación',
+                errors: errors.array()
+            });
+        }
+
         const { userId } = req.params;
         const updates = req.body;
 
         if (req.file) {
-            updates.profileImage = req.file.filename;
+            updates.profileImage = req.file.filename; // Guardar nombre de nueva imagen si se sube
         }
 
         const user = await User.findByIdAndUpdate(userId, updates, { new: true });
         if (!user) {
-            return res.status(404).send({ message: 'User not found' });
+            return res.status(404).send({ message: 'Usuario no encontrado' });
         }
 
-        return res.send({ message: 'User updated successfully', user });
+        return res.send({ message: 'Usuario actualizado correctamente', user });
     } catch (err) {
         console.error(err);
-        return res.status(500).send({ message: 'Error updating user', err });
+        return res.status(500).send({
+            message: 'Error al actualizar el usuario',
+            err
+        });
     }
 };
 
