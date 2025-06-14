@@ -63,6 +63,10 @@ import Admin from '../admin/admin.model.js' // Modelo Admin
 export const registerAdmin = async (req, res) => {
     const { name, surname, username, email, password, phone } = req.body
 
+    if (!name || !surname || !username || !email || !password || !phone) {
+        return res.status(400).json({ message: 'Todos los campos son obligatorios' })
+    }
+
     try {
         // Verificar si el usuario o el email ya existe
         const existingAdmin = await Admin.findOne(
