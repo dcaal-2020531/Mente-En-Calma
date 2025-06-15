@@ -12,6 +12,7 @@ import appointmentRoutes from '../src/appointment/appointment.routes.js'
 import programsRoutes from '../src/programs/programs.routes.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import psychiatricCenterRoutes from '../src/psychiatricCenter/psychiatricCenter.routes.js'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,7 @@ const routes = (app)=>{
    app.use('/v1/user', userRoutes)
    app.use('/v1/appointment', appointmentRoutes)
    app.use('/v1/programs', programsRoutes)
+   app.use('/v1/centers', psychiatricCenterRoutes)
 }
 
 

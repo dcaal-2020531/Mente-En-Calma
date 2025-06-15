@@ -55,3 +55,5 @@ psychologistSchema.methods.toJSON = function(){
 }
 
 export default model('Psychologist', psychologistSchema)
+
+

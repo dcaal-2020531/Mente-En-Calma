@@ -141,3 +141,62 @@ export const deleteAdmin = async (req, res) => {
         res.status(500).json({ message: 'Error deleting Admin' })
     }
 }
+
+export const defaultAdmin = async () => {
+  try {
+    const existing = await Admin.findOne();
+    if (existing) {
+      console.log('Los Admins predeterminadas ya existen.');
+      return;
+    }
+    console.log('Creando Los Admins predeterminadas…');
+
+    const docs = [
+      {
+        name: 'Oroxon',
+        surname: 'Ixchop',
+        username: 'OroIxchop123',
+        email: "admin@gmail.com",
+        password: "Aa12345678",
+        phone: 12345678
+      },
+     {
+        name: 'Samuel',
+        surname: 'Perez',
+        username: 'perezpro',
+        email: "perez@gmail.com",
+        password: "aUhgf1234",
+        phone: 52147896
+      },
+      {
+        name: 'Alexander',
+        surname: 'Borja',
+        username: 'Borja',
+        email: "alexander@gmail.com",
+        password: "Alemania1939",
+        phone: 85274164
+      },
+      {
+        name: 'Jose',
+        surname: 'Aceituno',
+        username: 'Tunas',
+        email: "aceituno@gmail.com",
+        password: "contraseña123",
+        phone: 954781000
+      },
+      {
+        name: 'Juan',
+        surname: 'Barrera',
+        username: 'JP',
+        email: "barrera@gmail.com",
+        password: "NBA58725787",
+        phone: 78472364
+      }
+    ];
+
+    await Admin.insertMany(docs);
+    console.log('Admins predeterminadas creadas correctamente');
+  } catch (err) {
+    console.error('Error al crear las Admins predeterminadas:', err);
+  }
+}

@@ -70,3 +70,84 @@ export const deletePsychologist = async (req, res) => {
         return res.status(500).send({ message: 'Error deleting Psychologist', err });
     }
 }
+
+export const defaultPsychologists = async () => {
+  try {
+    const existing = await Psychologist.findOne(); // Solo revisa si ya hay alguno creado
+    if (existing) {
+      console.log('Los psicólogos predeterminados ya existen.');
+      return;
+    }
+
+    console.log('Creando los psicólogos predeterminados…');
+
+    const docs = [
+      {
+        name: 'Oroxon',
+        surname: 'Ixchop',
+        email: 'admin@gmail.com',
+        password: 'Aa12345678',
+        birthdate: new Date('1990-01-01'),
+        phone: '12345678',
+        country: 'Guatemala',
+        departament: 'Guatemala',
+        gender: 'Hombre',
+        specialties: 'Ansiedad'
+      },
+      {
+        name: 'Samuel',
+        surname: 'Perez',
+        email: 'perez@gmail.com',
+        password: 'aUhgf1234',
+        birthdate: new Date('1988-03-15'),
+        phone: '52147896',
+        country: 'Guatemala',
+        departament: 'Sacatepéquez',
+        gender: 'Hombre',
+        specialties: 'TDAH'
+      },
+      {
+        name: 'Alexander',
+        surname: 'Borja',
+        email: 'alexander@gmail.com',
+        password: 'Alemania1939',
+        birthdate: new Date('1992-07-22'),
+        phone: '85274164',
+        country: 'Guatemala',
+        departament: 'Quetzaltenango',
+        gender: 'Hombre',
+        specialties: 'Duelo'
+      },
+      {
+        name: 'Jose',
+        surname: 'Aceituno',
+        email: 'aceituno@gmail.com',
+        password: 'contraseña123',
+        birthdate: new Date('1995-09-10'),
+        phone: '95478100',
+        country: 'Guatemala',
+        departament: 'Escuintla',
+        gender: 'Hombre',
+        specialties: 'Autoestima'
+      },
+      {
+        name: 'Juan',
+        surname: 'Barrera',
+        email: 'barrera@gmail.com',
+        password: 'NBA58725787',
+        birthdate: new Date('1987-12-05'),
+        phone: '78472364',
+        country: 'Guatemala',
+        departament: 'Chimaltenango',
+        gender: 'Hombre',
+        specialties: 'Relaciones'
+      }
+    ];
+
+    await Psychologist.insertMany(docs);
+    console.log('Psicólogos predeterminados creados correctamente');
+  } catch (err) {
+    console.error('Error al crear los psicólogos predeterminados:', err);
+  }
+};
+
