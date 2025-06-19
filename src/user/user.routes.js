@@ -49,7 +49,7 @@ const userValidation = [
 const api = Router();
 
 api.get('/getall', getAllUsers);
-api.post('/user', upload.single('profileImage'), userValidation, createUser);
+api.post('/createUser',  createUser);
 api.put('/:userId', upload.single('profileImage'), userValidation, updateUser);
 api.delete('/:userId', deleteUser);
 

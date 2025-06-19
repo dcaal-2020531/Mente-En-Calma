@@ -1,39 +1,53 @@
 import Appointment from './appointment.model.js';
+import {validateJwt}  from '../../middlewares/validate.jwt.js';
 
 export const createAppointment = async (req, res) => {
-    try {
-        const { user, psychologist, date, notes } = req.body;
-        const appointmentDate = new Date(date);
+  try {
+    const { psychologist, date, notes } = req.body;
 
-        if (appointmentDate <= new Date()) {
-            return res.status(400).send({ message: 'Appointment must be scheduled for a future date' });
-        }
+    let userId = req.body.user; // fallback por si se pasa desde frontend
 
-        const conflictingAppointment = await Appointment.findOne({
-            psychologist: psychologist,
-            date: appointmentDate
-        });
-
-        if (conflictingAppointment) {
-            return res.status(400).send({ message: 'The psychologist already has an appointment at that time' });
-        }
-
-        const appointment = new Appointment({ user, psychologist, date: appointmentDate, notes });
-        await appointment.save();
-
-        return res.status(201).send({
-            message: 'Appointment created successfully',
-            appointment
-        });
-
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send({
-            message: 'Error creating appointment',
-            err
-        });
+    // También permitir extraer el ID desde el token si lo usas con middlewares
+    if (req.user && req.user.id) {
+      userId = req.user.id;
     }
+
+    const appointmentDate = new Date(date);
+    if (appointmentDate <= new Date()) {
+      return res.status(400).send({ message: 'La cita debe programarse para una fecha futura.' });
+    }
+
+    const conflictingAppointment = await Appointment.findOne({
+      psychologist: psychologist,
+      date: appointmentDate
+    });
+
+    if (conflictingAppointment) {
+      return res.status(400).send({ message: 'El psicólogo ya tiene cita a esa hora.' });
+    }
+
+    const appointment = new Appointment({
+      user: userId,
+      psychologist,
+      date: appointmentDate,
+      notes
+    });
+
+    await appointment.save();
+
+    return res.status(201).send({
+      message: 'Cita creada exitosamente',
+      appointment
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({
+      message: 'Error al crear cita',
+      err
+    });
+  }
 };
+
 
 export const getAllAppointments = async (req, res) => {
     try {

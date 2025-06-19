@@ -1,4 +1,5 @@
 import User from './user.model.js';
+import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import fs from 'fs';
 
@@ -28,9 +29,23 @@ export const createUser = async (req, res) => {
         }
 
         const data = req.body;
-        if (req.file) {
-            data.profileImage = req.file.filename; // Guardar nombre de la imagen si se sube
+
+        // Encriptar la contraseña antes de guardar
+        if (!data.password) {
+            return res.status(400).json({
+                success: false,
+                message: 'La contraseña es obligatoria'
+            });
         }
+
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        data.password = hashedPassword;
+
+        // Si se subió una imagen de perfil
+        if (req.file) {
+            data.profileImage = req.file.filename;
+        }
+
         const user = new User(data);
         await user.save();
 

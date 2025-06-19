@@ -151,3 +151,19 @@ export const defaultPsychologists = async () => {
   }
 };
 
+export const getAllPsychologists = async (req, res) => {
+    try {
+        const psychologists = await Psychologist.find();
+
+        return res.send({
+            message: 'Lista de psicólogos obtenida exitosamente',
+            psicologos: psychologists
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({
+            message: 'Error al obtener los psicólogos',
+            err
+        });
+    }
+};

@@ -3,6 +3,7 @@ import { checkPassword, encrypt } from '../../utils/encrypt.js'
 import { generateJwt } from '../../utils/jwt.js'
 import Admin from '../admin/admin.model.js' // Modelo Admin
 import User from '../user/user.model.js'
+import bcrypt from 'bcrypt';
 
     export const test = (req, res)=>{
         console.log('test is running')
@@ -187,34 +188,41 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
-        let { email, password } = req.body;
+        const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).send({ message: 'Email and password are required' });
+            return res.status(400).send({ message: 'Email y contraseña son requeridos' });
         }
 
-        let user = await User.findOne({ email });
+        const user = await User.findOne({ email });
 
-        if (user && await checkPassword(user.password, password)) {
-            let loggedUser = {
-                id: user._id,
-                name: user.name,
-                username: user.username,
-            };
-
-            let token = await generateJwt(loggedUser);
-
-            return res.send({
-                message: `Welcome`,
-                loggedUser,
-                token
-            });
+        if (!user) {
+            return res.status(400).send({ message: 'Correo o contraseña incorrectos' });
         }
 
-        return res.status(400).send({ message: 'Wrong email or password' });
+        // Comparar contraseñas con bcrypt
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(400).send({ message: 'Correo o contraseña incorrectos' });
+        }
+
+        const loggedUser = {
+            id: user._id,
+            name: user.name,
+            username: user.username,
+        };
+
+        const token = await generateJwt(loggedUser);
+
+        return res.send({
+            message: 'Bienvenido',
+            loggedUser,
+            token
+        });
 
     } catch (err) {
         console.error(err);
-        return res.status(500).send({ message: 'General error with login function' });
+        return res.status(500).send({ message: 'Error en la función de login' });
     }
 };
