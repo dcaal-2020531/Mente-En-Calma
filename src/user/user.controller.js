@@ -1,7 +1,7 @@
 import User from './user.model.js';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
-import fs from 'fs';
+import Appointment from '../appointment/appointment.model.js'; 
 
 export const getAllUsers = async (req, res) => {
     try {
@@ -111,4 +111,26 @@ export const deleteUser = async (req, res) => {
         console.error(err);
         return res.status(500).send({ message: 'Error deleting user', err });
     }
+};
+
+export const getUserAppointments = async (req, res) => {
+  try {
+    const userId = req.user.id; // Asignado por validateJwt
+
+    const appointments = await Appointment.find({ userId });
+
+    if (!appointments.length) {
+      return res.status(404).send({ message: 'No se encontraron citas para este usuario.' });
+    }
+
+    return res.status(200).send({
+      message: 'Citas recuperadas con éxito',
+      appointments
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({
+      message: 'Error retrieving user appointments'
+    });
+  }
 };

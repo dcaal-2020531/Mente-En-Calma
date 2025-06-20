@@ -28,6 +28,6 @@ const programSchema = Schema(
             type: String,
         }
     }
-    )
+)
 
 export default model('Program', programSchema)

@@ -4,9 +4,9 @@ import { isAdmin, validateJwt } from '../../middlewares/validate.jwt.js'
 
 const api = Router();
 
-api.get('/getall',[validateJwt], getAll)
-api.post('/programs',[validateJwt, isAdmin],save)
-api.delete('/:ProgramsId',[validateJwt, isAdmin], deletePrograms)
-api.put('/:ProgramsId',[validateJwt,isAdmin], updatePrograms)
+api.get('/getall',validateJwt,  getAll)
+api.post('/createPrograms',validateJwt ,save)
+api.delete('/:ProgramsId',validateJwt, deletePrograms)
+api.put('/:ProgramsId',validateJwt, updatePrograms)
 
 export default api
