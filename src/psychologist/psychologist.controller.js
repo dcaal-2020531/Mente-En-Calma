@@ -92,6 +92,7 @@ export const defaultPsychologists = async () => {
       console.log('Los psicólogos predeterminados ya existen.');
       return;
     }
+    
 
     console.log('Creando los psicólogos predeterminados…');
 
@@ -100,7 +101,7 @@ export const defaultPsychologists = async () => {
         name: 'Oroxon',
         surname: 'Ixchop',
         email: 'admin@gmail.com',
-        password: 'Aa12345678',
+        password:'Aa12345678',
         birthdate: new Date('1990-01-01'),
         phone: '12345678',
         country: 'Guatemala',
@@ -156,8 +157,11 @@ export const defaultPsychologists = async () => {
         gender: 'Hombre',
         specialties: 'Relaciones'
       }
-    ];
+    ]; 
 
+    for (let doc of docs) {
+      doc.password = await encrypt(doc.password);
+    }
     await Psychologist.insertMany(docs);
     console.log('Psicólogos predeterminados creados correctamente');
   } catch (err) {

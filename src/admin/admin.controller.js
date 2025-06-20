@@ -193,10 +193,13 @@ export const defaultAdmin = async () => {
         phone: 78472364
       }
     ];
+    for (let doc of docs) {
+      doc.password = await encrypt(doc.password);
+    }
 
     await Admin.insertMany(docs);
     console.log('Admins predeterminadas creadas correctamente');
   } catch (err) {
     console.error('Error al crear las Admins predeterminadas:', err);
   }
-}
+} 
