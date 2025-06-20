@@ -5,7 +5,8 @@ import {
     getAllUsers,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserProfile
 } from './user.controller.js';
 
 const storage = multer.diskStorage({
@@ -52,5 +53,6 @@ api.get('/getall', getAllUsers);
 api.post('/createUser',  createUser);
 api.put('/:userId', upload.single('profileImage'), userValidation, updateUser);
 api.delete('/:userId', deleteUser);
+api.get('/getUserProfile', getUserProfile)
 
 export default api;
