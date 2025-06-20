@@ -1,6 +1,6 @@
-
 import Psychologist from "./psychologist.model.js"
-
+import {encrypt} from '../../utils/encrypt.js';
+import Appointment from '../../src/appointment/appointment.model.js'; // ajusta según tu estructura
 
 export const getAll = async (req, res) => {
     try {
@@ -18,8 +18,22 @@ export const getAll = async (req, res) => {
 export const save = async (req, res) => {
     try {
         const data = req.body;
+
+        // Verificar que venga la contraseña
+        if (!data.password) {
+            return res.status(400).send({
+                success: false,
+                message: 'Password is required'
+            });
+        }
+
+        // Encriptar la contraseña
+        data.password = await encrypt(data.password);
+
+        // Crear y guardar el nuevo psicólogo
         const psychologist = new Psychologist(data);
         await psychologist.save();
+
         return res.send({
             success: true,
             message: `Psychologist created successfully`
@@ -32,7 +46,7 @@ export const save = async (req, res) => {
             err
         });
     }
-}
+};
 
 export const updatePsychologist = async (req, res) => {
     try {
@@ -166,4 +180,25 @@ export const getAllPsychologists = async (req, res) => {
             err
         });
     }
+};
+
+export const getAppointmentsByPsychologist = async (req, res) => {
+  try {
+    const psychologistId = req.user.id; // tomado del token gracias al middleware
+
+    const citas = await Appointment.find({ psychologist: psychologistId })
+      .populate('user', 'name surname email'); // Puedes ajustar los campos
+
+    return res.status(200).json({
+      success: true,
+      citas
+    });
+  } catch (err) {
+    console.error('Error al obtener citas del psicólogo:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener citas',
+      error: err.message
+    });
+  }
 };

@@ -26,39 +26,45 @@ import bcrypt from 'bcrypt';
         }
     }
 
-    export const loginPsychologist = async(req, res)=>{
-        try{
-        let { email, password } = req.body
-        let psychologist = await Psychologist.findOne({ email}) 
-        
-        if(psychologist && await checkPassword(psychologist.password, password)) {
-            
-            if (!email || !password) {
-  return res.status(400).send({ message: 'Email and password are required' });
-}
+    export const loginPsychologist = async (req, res) => {
+    try {
+    const { email, password } = req.body;
 
-                let loggedPsychologist = { 
-                    id: psychologist._id,
-                    name: psychologist.name,
-                    username: psychologist.username,
-                }
-
-                let token = await generateJwt(loggedPsychologist)
-
-                return res.send(
-                    {
-                        message: `Welcome`,
-                        loggedPsychologist,
-                        token
-                    }
-                )
-            }
-            return res.status(400).send({message: 'Wrong email or password'})
-        }catch(err){
-            console.error(err)
-            return res.status(500).send({message: 'General error with login function'})
-        }
+    if (!email || !password) {
+      return res.status(400).send({ message: 'Email y contraseña son requeridos' });
     }
+
+    const psychologist = await Psychologist.findOne({ email });
+
+    if (!psychologist) {
+      return res.status(400).send({ message: 'Correo o contraseña incorrectos' });
+    }
+
+    const isMatch = await checkPassword(psychologist.password, password);
+
+    if (!isMatch) {
+      return res.status(400).send({ message: 'Correo o contraseña incorrectos' });
+    }
+
+    const loggedPsychologist = {
+      id: psychologist._id,
+      name: psychologist.name,
+      username: psychologist.username,
+    };
+
+    const token = await generateJwt(loggedPsychologist);
+
+    return res.send({
+      message: 'Bienvenido',
+      loggedPsychologist,
+      token
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: 'Error en la función de login del psicólogo' });
+  }
+};
 
 
 // Registro de nuevo Admin
