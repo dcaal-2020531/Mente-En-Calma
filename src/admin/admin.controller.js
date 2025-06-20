@@ -152,47 +152,48 @@ export const defaultAdmin = async () => {
     console.log('Creando Los Admins predeterminadas…');
 
     const docs = [
-      {
-        name: 'Oroxon',
-        surname: 'Ixchop',
-        username: 'OroIxchop123',
-        email: "admin@gmail.com",
-        password: "Aa12345678",
-        phone: 12345678
-      },
-     {
-        name: 'Samuel',
-        surname: 'Perez',
-        username: 'perezpro',
-        email: "perez@gmail.com",
-        password: "aUhgf1234",
-        phone: 52147896
-      },
-      {
-        name: 'Alexander',
-        surname: 'Borja',
-        username: 'Borja',
-        email: "alexander@gmail.com",
-        password: "Alemania1939",
-        phone: 85274164
-      },
-      {
-        name: 'Jose',
-        surname: 'Aceituno',
-        username: 'Tunas',
-        email: "aceituno@gmail.com",
-        password: "contraseña123",
-        phone: 954781000
-      },
-      {
-        name: 'Juan',
-        surname: 'Barrera',
-        username: 'JP',
-        email: "barrera@gmail.com",
-        password: "NBA58725787",
-        phone: 78472364
-      }
-    ];
+  {
+    name: 'Lucía',
+    surname: 'Fernández',
+    username: 'luciferna',
+    email: "luciaf@gmail.com",
+    password: "LuFer#2025",
+    phone: 78945612
+  },
+  {
+    name: 'Carlos',
+    surname: 'Ramírez',
+    username: 'carlos_rz',
+    email: "c.ramirez@gmail.com",
+    password: "C@rlos2025",
+    phone: 65874123
+  },
+  {
+    name: 'Valeria',
+    surname: 'Morales',
+    username: 'val_mo',
+    email: "valeria.m@gmail.com",
+    password: "Vale2025!",
+    phone: 74125896
+  },
+  {
+    name: 'Diego',
+    surname: 'López',
+    username: 'dieguito_lpz',
+    email: "diego.lopez@gmail.com",
+    password: "DieLo123$",
+    phone: 98765432
+  },
+  {
+    name: 'Ana',
+    surname: 'Castillo',
+    username: 'ana_cas',
+    email: "ana.castillo@gmail.com",
+    password: "An@Cast20",
+    phone: 12378945
+  }
+];
+
     for (let doc of docs) {
       doc.password = await encrypt(doc.password);
     }
