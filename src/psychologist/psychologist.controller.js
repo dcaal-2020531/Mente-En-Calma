@@ -206,3 +206,20 @@ export const getAppointmentsByPsychologist = async (req, res) => {
     });
   }
 };
+
+
+export const getPsychologistProfile = async (req, res) => {
+  try {
+    // Usa el ID decodificado desde el token JWT
+    const psychologist = await Psychologist.findById(req.user.id).select('-password');
+
+    if (!psychologist) {
+      return res.status(404).json({ message: 'Psicólogo no encontrado' });
+    }
+
+    return res.status(200).json({ message: 'Perfil encontrado', psychologist });
+  } catch (err) {
+    console.error('Error al obtener el perfil del psicólogo:', err);
+    return res.status(500).json({ message: 'Error al obtener el perfil' });
+  }
+};
