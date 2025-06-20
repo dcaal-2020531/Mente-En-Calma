@@ -4,13 +4,15 @@ import {
     getAdminById,
     updateAdmin, 
     updateAdminPassword,
-    deleteAdmin 
+    deleteAdmin ,
+    getAdminProfile
 } from './admin.controller.js'
 import { 
     validateCreateUpdateAdmin, 
     validateChangePassword, 
     validateAdminId 
 } from '../../helpers/validators.js'
+import { validateJwt } from '../../middlewares/validate.jwt.js'
 
 const api = Router()
 
@@ -30,5 +32,8 @@ api.put('/:id/updatePassword', validateAdminId, validateChangePassword, updateAd
 
 // Eliminar un Admin
 api.delete('/:id/delete', validateAdminId, deleteAdmin)
+
+api.get('/getAdmin', validateJwt, getAdminProfile)
+
 
 export default api

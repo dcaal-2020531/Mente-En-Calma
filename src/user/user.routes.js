@@ -5,10 +5,10 @@ import {
     getAllUsers,
     createUser,
     updateUser,
-    deleteUser, getUserAppointments
+    deleteUser, getUserAppointments,
+    getUserProfile
 } from './user.controller.js';
-import { validateJwt } from '../../middlewares/validate.jwt.js'
-
+import { validateJwt } from '../../middlewares/validate.jwt.js' 
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'uploads/'),
@@ -55,5 +55,6 @@ api.post('/createUser',  createUser);
 api.put('/:userId', upload.single('profileImage'), userValidation, updateUser);
 api.delete('/:userId', deleteUser);
 api.get('/allCitas', validateJwt, getUserAppointments);
+api.get('/getUserProfile',validateJwt, getUserProfile)
 
 export default api;

@@ -113,6 +113,23 @@ export const deleteUser = async (req, res) => {
     }
 };
 
+
+export const getUserProfile = async (req, res) => {
+  try {
+    // Usa req.user.id en lugar de req.userId
+    const user = await User.findById(req.user.id).select('-password');
+
+    if (!user) {
+      return res.status(404).send({ message: 'Usuario no encontrado' });
+    }
+
+    return res.status(200).send({ message: 'Perfil encontrado', user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: 'Error al obtener el perfil' });
+  }
+};
+
 export const getUserAppointments = async (req, res) => {
   try {
     const userId = req.user.id; // Asignado por validateJwt

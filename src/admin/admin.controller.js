@@ -175,7 +175,7 @@ export const defaultAdmin = async () => {
     email: "valeria.m@gmail.com",
     password: "Vale2025!",
     phone: 74125896
-  },
+  }, 
   {
     name: 'Diego',
     surname: 'López',
@@ -204,3 +204,21 @@ export const defaultAdmin = async () => {
     console.error('Error al crear las Admins predeterminadas:', err);
   }
 } 
+
+
+
+export const getAdminProfile = async (req, res) => {
+  try {
+    // Usa el ID extraído del token JWT (req.user.id viene del middleware validateJwt)
+    const admin = await Admin.findById(req.user.id).select('-password');
+
+    if (!admin) {
+      return res.status(404).json({ message: 'Administrador no encontrado' });
+    }
+
+    return res.status(200).json({ message: 'Perfil encontrado', admin });
+  } catch (err) {
+    console.error('Error al obtener el perfil del administrador:', err);
+    return res.status(500).json({ message: 'Error al obtener el perfil del administrador' });
+  }
+};
