@@ -130,13 +130,21 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
+
+
 export const getUserAppointments = async (req, res) => {
   try {
-    const userId = req.user.id; // Asignado por validateJwt
+    if (!req.user || !req.user.id) {
+      return res.status(401).send({ message: 'Token inválido o usuario no autenticado' });
+    }
 
-    const appointments = await Appointment.find({ userId });
+    const userId = req.user.id;
 
-    if (!appointments.length) {
+    const appointments = await Appointment.find({ user: userId })
+      .populate('psychologist', 'name surname') // opcional: para mostrar nombre del psicólogo
+      .sort({ date: -1 });
+
+    if (!appointments || appointments.length === 0) {
       return res.status(404).send({ message: 'No se encontraron citas para este usuario.' });
     }
 
@@ -145,9 +153,10 @@ export const getUserAppointments = async (req, res) => {
       appointments
     });
   } catch (err) {
-    console.error(err);
+    console.error('Error al recuperar citas:', err);
     return res.status(500).send({
-      message: 'Error retrieving user appointments'
-    }); 
+      message: 'Error interno al recuperar citas',
+      error: err.message
+    });
   }
 };

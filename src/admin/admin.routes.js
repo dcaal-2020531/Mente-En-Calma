@@ -18,6 +18,8 @@ const api = Router()
 
 //------------------------Rutas de Admin------------------------
 
+api.get('/getAdmin', validateJwt, getAdminProfile)
+
 // Obtener todos los Admins
 api.get('/', getAllAdmins)
 
@@ -33,7 +35,6 @@ api.put('/:id/updatePassword', validateAdminId, validateChangePassword, updateAd
 // Eliminar un Admin
 api.delete('/:id/delete', validateAdminId, deleteAdmin)
 
-api.get('/getAdmin', validateJwt, getAdminProfile)
 
 
 export default api
