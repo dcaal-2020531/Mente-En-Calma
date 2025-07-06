@@ -17,3 +17,13 @@ export const generateJwt = async(payload)=>{
         return err
     }
 }
+
+export function generateZoomJWT() {
+  const payload = {
+    iss: process.env.ZOOM_CLIENT_ID,
+    exp: Math.floor(Date.now() / 1000) + 120 // expira en 60 segundos
+  };
+
+  const token = jwt.sign(payload, process.env.ZOOM_CLIENT_SECRET);
+  return token;
+}
